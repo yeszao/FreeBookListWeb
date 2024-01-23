@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: ${DB_DRIVER_CLASS:org.h2.Driver}
-    url: ${DB_JDBC_URL:jdbc:h2:mem:springboot_scaffold}
+    url: ${DB_JDBC_URL:jdbc:h2:file:./springboot_scaffold}
     username: ${DB_USERNAME:sa}
     password: ${DB_PASSWORD:password}
     hikari:
@@ -20,6 +20,10 @@ spring:
       ddl-auto: update
     show-sql: true
     database-platform: ${DB_JPA_DIALECT:org.hibernate.dialect.H2Dialect}
+  graphql:
+    graphiql:
+      enabled: ${GRAPHIQL_ENABLED:true}
+
 
 springdoc:
   swagger-ui:
