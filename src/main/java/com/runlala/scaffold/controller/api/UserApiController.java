@@ -7,6 +7,7 @@ import com.runlala.scaffold.mapper.UserMapper;
 import com.runlala.scaffold.service.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +22,10 @@ import java.util.Optional;
 @RequestMapping("/api/users")
 @Tag(name = "User")
 @Validated
+@AllArgsConstructor
 public class UserApiController {
     private final UserService userService;
     private final UserMapper userMapper;
-
-    @Autowired
-    public UserApiController(UserService userService, UserMapper userMapper) {
-        this.userService = userService;
-        this.userMapper = userMapper;
-    }
 
     @PostMapping("/add")
     public ResponseEntity<UserOutDto> add(@RequestBody @Valid UserInDto userInDto) {
