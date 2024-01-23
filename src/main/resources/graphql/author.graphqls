@@ -1,0 +1,14 @@
+extend type Mutation {
+    addAuthor(authorInDto: AuthorInDto): Author
+}
+
+
+type Author {
+    id: ID!
+    name: String!
+}
+
+
+input AuthorInDto {
+    name: String!
+}

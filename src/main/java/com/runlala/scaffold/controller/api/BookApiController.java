@@ -13,16 +13,16 @@ import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class BookController {
+public class BookApiController {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
 
     private final BookMapper bookMapper;
 
-    public BookController(BookRepository bookRepository,
-                          AuthorRepository authorRepository,
-                          BookMapper bookMapper) {
+    public BookApiController(BookRepository bookRepository,
+                             AuthorRepository authorRepository,
+                             BookMapper bookMapper) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.bookMapper = bookMapper;
@@ -39,7 +39,7 @@ public class BookController {
     }
 
     @MutationMapping
-    public Book createBook(@Argument BookInDto bookInDto) {
+    public Book addBook(@Argument BookInDto bookInDto) {
         Book book = bookMapper.toBook(bookInDto);
         return bookRepository.save(book);
     }
