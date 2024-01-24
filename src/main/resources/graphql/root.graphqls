@@ -1,0 +1,13 @@
+type Query {
+    book(id: ID!): Book
+    books(first: Int, after: String, last: Int, before: String): BookConnection
+    author(id: ID!): Author
+    authors(first: Int, after: String, last: Int, before: String): AuthorConnection
+}
+
+type Mutation {
+    addBook(bookInDto: BookInDto): Book
+    updateBook(id: ID, name: String, authorId: ID): Book
+    deleteBook(id: ID): Book
+    addAuthor(authorInDto: AuthorInDto): Author
+}
