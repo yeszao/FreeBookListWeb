@@ -1,14 +1,3 @@
-extend type Query {
-    getBook(id: ID): Book
-    getAllBooks(first: Int, after: String, last: Int, before: String): BookConnection
-}
-
-extend type Mutation {
-    addBook(bookInDto: BookInDto): Book
-    updateBook(id: ID, name: String, authorId: ID): Book
-    deleteBook(id: ID): Book
-}
-
 type Book {
     id: ID!
     name: String!

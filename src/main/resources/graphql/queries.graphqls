@@ -1,0 +1,11 @@
+type Query {
+    getBook(id: ID): Book
+    getAllBooks(first: Int, after: String, last: Int, before: String): BookConnection
+}
+
+type PageInfo {
+    hasNextPage: Boolean
+    hasPreviousPage: Boolean
+    startCursor: String
+    endCursor: String
+}
