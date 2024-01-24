@@ -28,3 +28,6 @@ springdoc:
   api-docs:
     path: /v3/api-docs
     enabled: true
+
+site:
+  static-base-url: ${STATIC_BASE_URL:http://localhost:8080}
