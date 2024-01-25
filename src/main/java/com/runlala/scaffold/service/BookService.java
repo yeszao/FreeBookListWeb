@@ -44,7 +44,7 @@ public class BookService {
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
 
-        Page<Book> books = bookRepository.findAll(spec, pageable);
+        Page<Book> books =  bookRepository.findAll(spec, pageable);
         return bookMapper.pageToDto(books);
     }
 

@@ -2,7 +2,6 @@ package com.runlala.scaffold.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -13,6 +12,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.BatchSize;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -35,7 +35,7 @@ public class Book extends EntityBase {
     private String epubUri;
 
     @Column(nullable = false)
-    private String chapterCount;
+    private Integer chapterCount;
 
     @Column(nullable = false)
     private String lang;
@@ -46,11 +46,8 @@ public class Book extends EntityBase {
     @Column(nullable = false)
     private Integer randomOrder;
 
-    @Column(nullable = false)
-    private Long authorId;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "authorId", insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "authorId")
     private Author author;
 
     @ManyToMany
@@ -58,5 +55,5 @@ public class Book extends EntityBase {
     @JoinTable(name = "book_tag_relation",
             joinColumns = @JoinColumn(name = "bookId"),
             inverseJoinColumns = @JoinColumn(name = "tagId"))
-    private Set<Tag> tags;
+    private Set<Tag> tags = new HashSet<>();
 }
