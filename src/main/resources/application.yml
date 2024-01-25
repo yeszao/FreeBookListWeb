@@ -30,4 +30,4 @@ springdoc:
     enabled: true
 
 site:
-  static-base-url: ${STATIC_BASE_URL:http://localhost:8080}
+  static-base-url: ${STATIC_BASE_URL:https://freebooklist.s3.ap-southeast-1.amazonaws.com/}
