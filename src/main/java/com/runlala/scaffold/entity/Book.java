@@ -31,4 +31,7 @@ public class Book extends EntityBase {
 
     @Column(nullable = false)
     private Long authorId;
+
+    @Column(nullable = false)
+    private Boolean mostFamous;
 }
