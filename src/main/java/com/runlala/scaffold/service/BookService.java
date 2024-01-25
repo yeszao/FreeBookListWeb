@@ -11,7 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,7 +28,8 @@ public class BookService {
     private final BookMapper bookMapper;
 
     public Page<BookOutDto> getAll(BookFilterDto bookFilterDto, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
+        Sort sort = Sort.by(Sort.Direction.ASC, "randomOrder");
+        Pageable pageable = PageRequest.of(page, size, sort);
 
         Specification<Book> spec = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
@@ -43,5 +46,11 @@ public class BookService {
 
         Page<Book> books = bookRepository.findAll(spec, pageable);
         return bookMapper.pageToDto(books);
+    }
+
+    @Scheduled(fixedRate = 24 * 60 * 60 * 1000, initialDelay = 5000)
+    public void updateRandomOrder() {
+        bookRepository.updateRandomOrder();
+        log.info("Updated random order");
     }
 }
