@@ -48,7 +48,7 @@ public class BookService {
         return bookMapper.pageToDto(books);
     }
 
-    @Scheduled(fixedRate = 24 * 60 * 60 * 1000, initialDelay = 5000)
+    @Scheduled(fixedRate = 24 * 60 * 60 * 1000, initialDelay = 60 * 60 * 1000)
     public void updateRandomOrder() {
         bookRepository.updateRandomOrder();
         log.info("Updated random order");
