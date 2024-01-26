@@ -41,6 +41,14 @@ public class BookService {
                 predicates.add(criteriaBuilder.equal(root.get("mostFamous"), bookFilterDto.getMostFamous()));
             }
 
+            if (Objects.nonNull(bookFilterDto.getAuthorId()) && bookFilterDto.getAuthorId() > 0) {
+                predicates.add(criteriaBuilder.equal(root.get("author").get("id"), bookFilterDto.getAuthorId()));
+            }
+
+            if (Objects.nonNull(bookFilterDto.getTagId()) && bookFilterDto.getTagId() > 0) {
+                predicates.add(criteriaBuilder.equal(root.get("tags").get("id"), bookFilterDto.getTagId()));
+            }
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
 
