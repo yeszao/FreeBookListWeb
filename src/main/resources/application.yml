@@ -17,7 +17,7 @@ spring:
       path: ${H2_CONSOLE_PATH:/h2-console}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
     database-platform: ${DB_JPA_DIALECT:org.hibernate.dialect.H2Dialect}
 

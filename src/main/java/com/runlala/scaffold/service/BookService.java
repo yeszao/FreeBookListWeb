@@ -1,7 +1,8 @@
 package com.runlala.scaffold.service;
 
 import com.runlala.scaffold.dto.filter.BookFilterDto;
-import com.runlala.scaffold.dto.out.BookOutDto;
+import com.runlala.scaffold.dto.out.BookDetailOutDto;
+import com.runlala.scaffold.dto.out.BookListOutDto;
 import com.runlala.scaffold.entity.Book;
 import com.runlala.scaffold.mapper.BookMapper;
 import com.runlala.scaffold.repository.BookRepository;
@@ -27,7 +28,7 @@ public class BookService {
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
 
-    public Page<BookOutDto> getAll(BookFilterDto bookFilterDto, int page, int size) {
+    public Page<BookListOutDto> getAll(BookFilterDto bookFilterDto, int page, int size) {
         Sort sort = Sort.by(Sort.Direction.ASC, "randomOrder");
         Pageable pageable = PageRequest.of(page, size, sort);
 
@@ -53,7 +54,12 @@ public class BookService {
         };
 
         Page<Book> books =  bookRepository.findAll(spec, pageable);
-        return bookMapper.pageToDto(books);
+        return bookMapper.pageToListDto(books);
+    }
+
+    public BookDetailOutDto getBook(Long bookId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new RuntimeException("Book not found"));
+        return bookMapper.toDetailDto(book);
     }
 
     @Scheduled(fixedRate = 24 * 60 * 60 * 1000, initialDelay = 60 * 60 * 1000)
