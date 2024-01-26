@@ -2,8 +2,8 @@ package com.runlala.scaffold.dto.out;
 
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class BookListOutDto {
@@ -12,5 +12,5 @@ public class BookListOutDto {
     String coverUrl;
     String lang;
     AuthorOutDto author;
-    Set<TagOutDto> tags = new HashSet<>();
+    List<TagOutDto> tags = new ArrayList<>();
 }
