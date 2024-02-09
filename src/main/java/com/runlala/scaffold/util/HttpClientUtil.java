@@ -3,11 +3,13 @@ package com.runlala.scaffold.util;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
@@ -16,7 +18,6 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -34,7 +35,7 @@ public class HttpClientUtil {
         return client;
     }
 
-    public static <T> T get(String url, Map<String, String> params, String apiKey, Class<T> responseType) throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException {
+    public static <T> T get(String url, Map<String, String> params, String apiKey, TypeReference<T> responseType) throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException {
         HttpRequest request = HttpRequest
                 .newBuilder()
                 .uri(URI.create(url + buildParams(params)))
@@ -42,12 +43,11 @@ public class HttpClientUtil {
                 .header("Accept", "application/json")
                 .header("X-API-Key", apiKey)
                 .build();
-        log.info("Request: {}", request);
         HttpResponse<String> httpResponse = getHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
         return objectMapper.readValue(httpResponse.body(), responseType);
     }
 
-    public static <T> List<T> getList(String url, Map<String, String> params, String apiKey, TypeReference<List<T>> responseType) throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException {
+    public static HttpResponse<InputStream> getStream(String url, Map<String, String> params, String apiKey) throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException {
         HttpRequest request = HttpRequest
                 .newBuilder()
                 .uri(URI.create(url + buildParams(params)))
@@ -55,10 +55,7 @@ public class HttpClientUtil {
                 .header("Accept", "application/json")
                 .header("X-API-Key", apiKey)
                 .build();
-
-        HttpResponse<String> httpResponse = getHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-
-        return objectMapper.readValue(httpResponse.body(), responseType);
+        return getHttpClient().send(request, HttpResponse.BodyHandlers.ofInputStream());
     }
 
     private static final TrustManager[] trustAllCerts = new TrustManager[]{
@@ -91,5 +88,11 @@ public class HttpClientUtil {
         // Remove trailing '&'
         sb.setLength(sb.length() - 1);
         return sb.toString();
+    }
+
+    public static HttpHeaders convertHeaders(java.net.http.HttpHeaders sourceHeaders) {
+        HttpHeaders targetHeaders = new HttpHeaders();
+        sourceHeaders.map().forEach(targetHeaders::addAll);
+        return targetHeaders;
     }
 }

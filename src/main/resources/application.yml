@@ -31,3 +31,8 @@ springdoc:
 
 site:
   static-base-url: ${STATIC_BASE_URL:https://freebooklist.s3.ap-southeast-1.amazonaws.com/}
+  translator-base-url: ${TRANSLATOR_BASE_URL:https://word.runlala.com}
+  translator-api-key: ${TRANSLATOR_API_KEY:c14716c5f5a22e0b5794df09c9e7d62d}
+  translator-translate-path: ${TRANSLATOR_TRANSLATE_URI:/translate}
+  translator-languages-path: ${TRANSLATOR_LANGUAGES_URI:/languages}
+  translator-audio-path: ${TRANSLATOR_AUDIO_URI:/audio}

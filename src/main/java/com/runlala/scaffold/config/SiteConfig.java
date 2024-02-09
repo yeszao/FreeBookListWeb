@@ -12,6 +12,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class SiteConfig {
     private String staticBaseUrl;
 
+    private String translatorBaseUrl;
+
+    private String translatorApiKey;
+
+    private String translatorTranslatePath;
+
+    private String translatorLanguagesPath;
+
+    private String translatorAudioPath;
+
     @Named("completeStaticUrl")
     public String getStaticBaseUrl(String uri) {
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(staticBaseUrl);
