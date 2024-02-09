@@ -30,7 +30,7 @@ public class ToolApiController {
     private final String translateUrl = baseUrl + "/translate";
     private final String languagesUrl = baseUrl + "/languages";
 
-    private final String apiKey = "d7731619006ccefa3682e918ac6f5ac5";
+    private final String apiKey = "c14716c5f5a22e0b5794df09c9e7d62d";
 
     @GetMapping("/translate")
     public WordTranslation translate(@RequestParam String text,
@@ -40,7 +40,7 @@ public class ToolApiController {
 
     @GetMapping("/languages")
     public List<Language> languages() throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException {
-        return HttpClientUtil.getList(languagesUrl, null, apiKey, new TypeReference<List<Language>>(){});
+        return HttpClientUtil.getList(languagesUrl, null, apiKey, new TypeReference<>(){});
     }
 
 }

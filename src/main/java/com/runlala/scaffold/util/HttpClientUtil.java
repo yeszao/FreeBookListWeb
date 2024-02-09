@@ -1,7 +1,6 @@
 package com.runlala.scaffold.util;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,17 +22,8 @@ import java.util.Objects;
 
 @Slf4j
 public class HttpClientUtil {
-    static ObjectMapper objectMapper;
+    static ObjectMapper objectMapper = new ObjectMapper();
     static HttpClient client;
-
-    public static ObjectMapper getObjectMapper () {
-        if (Objects.isNull(objectMapper)) {
-            objectMapper = new ObjectMapper();
-            objectMapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-            objectMapper.enable(DeserializationFeature.USE_JAVA_ARRAY_FOR_JSON_ARRAY);
-        }
-        return objectMapper;
-    }
 
     public static HttpClient getHttpClient() throws NoSuchAlgorithmException, KeyManagementException {
         SSLContext sslContext = SSLContext.getInstance("TLS");
@@ -54,7 +44,7 @@ public class HttpClientUtil {
                 .build();
         log.info("Request: {}", request);
         HttpResponse<String> httpResponse = getHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        return getObjectMapper().convertValue(httpResponse.body(), responseType);
+        return objectMapper.readValue(httpResponse.body(), responseType);
     }
 
     public static <T> List<T> getList(String url, Map<String, String> params, String apiKey, TypeReference<List<T>> responseType) throws IOException, InterruptedException, NoSuchAlgorithmException, KeyManagementException {
@@ -65,9 +55,10 @@ public class HttpClientUtil {
                 .header("Accept", "application/json")
                 .header("X-API-Key", apiKey)
                 .build();
-        log.info("Request: {}", request);
+
         HttpResponse<String> httpResponse = getHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-        return getObjectMapper().convertValue(httpResponse.body(), responseType);
+
+        return objectMapper.readValue(httpResponse.body(), responseType);
     }
 
     private static final TrustManager[] trustAllCerts = new TrustManager[]{

@@ -1,12 +1,12 @@
 package com.runlala.scaffold.dto.http;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class WordTranslation {
     String word;
     String language;
