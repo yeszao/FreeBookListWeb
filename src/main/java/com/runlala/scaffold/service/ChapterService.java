@@ -21,4 +21,8 @@ public class ChapterService {
         List<Chapter> chapters = chapterRepository.findAllByBookId(bookId);
         return chapterMapper.toOutDto(chapters);
     }
+
+    public ChapterOutDto getChapter(Long chapterId) {
+        return chapterMapper.toOutDto(chapterRepository.getReferenceById(chapterId));
+    }
 }

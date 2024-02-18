@@ -23,6 +23,9 @@ public class Chapter extends EntityBase {
     private String audioUri;
 
     @Column(nullable = false)
+    private String originAudioUrl;
+
+    @Column(nullable = false)
     private Integer sort;
 
     @ManyToOne
