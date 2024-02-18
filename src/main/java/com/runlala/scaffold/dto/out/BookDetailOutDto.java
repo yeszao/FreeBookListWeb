@@ -15,6 +15,7 @@ public class BookDetailOutDto {
     Integer chapterCount;
     String lang;
     AuthorOutDto author;
+    Boolean hasAudio = false;
     List<TagOutDto> tags = new ArrayList<>();
     List<ChapterOutDto> chapters = new ArrayList<>();
 }

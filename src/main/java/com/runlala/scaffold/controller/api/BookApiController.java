@@ -34,6 +34,11 @@ public class BookApiController {
     public BookDetailOutDto getBook(@PathParam(value = "bookId") Long bookId) {
         BookDetailOutDto book = bookService.getBook(bookId);
         book.setChapters(chapterService.getChapters(bookId));
+        book.getChapters().forEach(chapterOutDto -> {
+            if (!"".equals(chapterOutDto.getAudioUrl())) {
+                book.setHasAudio(true);
+            }
+        });
         return book;
     }
 }
