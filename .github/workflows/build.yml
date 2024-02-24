@@ -64,4 +64,4 @@ jobs:
             echo "Reboot the Server"
             docker stop api && docker rm api
             sleep 1
-            docker run -d --name api -p 80:8000 --env-file .env --restart unless-stopped ${{env.DOCKER_TAG}}
+            docker run -d --name api -p 80:8080 --env-file .env --restart unless-stopped ${{env.DOCKER_TAG}}
