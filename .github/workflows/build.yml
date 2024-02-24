@@ -22,22 +22,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '17'
-
-      - name: Build api-server Gradle
-        run: |
-          ./gradlew :api-server:clean :api-server:build :api-server:bootJar
-          ./gradlew :api-server:copyJars
-
-      - name: Build api-server Image
-        run: |
-          cd ${{ github.workspace }}/api-server
-          docker build . -t whitedeer/api-server:latest --platform linux/amd64 || exit
-
       - name: Install AWS CLI
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -53,7 +37,7 @@ jobs:
       - name: Tag and Push Docker Image
         run: |
           echo "Docker Tag: $DOCKER_TAG"
-          docker tag whitedeer/api-server:latest $DOCKER_TAG
+          docker build . -t $DOCKER_TAG --platform linux/amd64 || exit
           docker push $DOCKER_TAG
 
   deploy:
