@@ -1,9 +1,9 @@
 name: Build and Deploy
 
 on:
-  create:
-    tags:
-      - '*'
+  push:
+    branches:
+      - main
 
 env:
   ECR_REGISTRY: 345871662120.dkr.ecr.ap-southeast-1.amazonaws.com

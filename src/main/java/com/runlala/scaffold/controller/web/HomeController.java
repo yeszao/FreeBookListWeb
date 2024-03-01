@@ -17,7 +17,7 @@ public class HomeController {
 
     @GetMapping("/health")
     @ResponseBody
-    public String health() {
-        return "ok";
+    public int health() {
+        return 1;
     }
 }
